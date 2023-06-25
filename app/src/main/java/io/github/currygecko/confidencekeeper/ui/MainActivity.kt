@@ -1,4 +1,4 @@
-package io.github.currygecko.confidencekeeper
+package io.github.currygecko.confidencekeeper.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import io.github.currygecko.confidencekeeper.ui.compose.AppInfoListView
 import io.github.currygecko.confidencekeeper.ui.theme.ConfidenceKeeperTheme
+import io.github.currygecko.confidencekeeper.usecase.AppInformationUseCase
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +24,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    val list = AppInformationUseCase().getApplicationInfo(applicationContext)
+                    AppInfoListView(pagingItems = list)
+//                    Greeting("Android")
                 }
             }
         }
