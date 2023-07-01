@@ -2,9 +2,10 @@ package io.github.currygecko.confidencekeeper.usecase
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Build
-import io.github.currygecko.confidencekeeper.model.AppInfo
+import io.github.currygecko.confidencekeeper.model.AppInformation
 import io.github.currygecko.confidencekeeper.model.asAppInfo
 
 
@@ -12,7 +13,7 @@ class AppInformationUseCase {
 
     // インストールアプリのリストを取得する
     @SuppressLint("QueryPermissionsNeeded")
-    fun getApplicationInfo(context: Context): List<AppInfo> {
+    fun getApplicationInfo(context: Context): List<AppInformation> {
         val packageManager = context.packageManager
         val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             PackageManager.MATCH_ALL
@@ -22,12 +23,20 @@ class AppInformationUseCase {
 
         val packages = packageManager.getInstalledApplications(flags)
 
-        return packages.filter { appInfo ->
-            !appInfo.packageName.startsWith("com.android") &&
-                    !appInfo.packageName.startsWith("com.google")
-        }.map { appInfo ->
+        return filterAppInfo(packages).map { appInfo ->
             appInfo.asAppInfo(packageManager)
+        }.sortedBy {
+            it.packageLabel
         }
 
     }
+
+    private fun filterAppInfo(packages: List<ApplicationInfo>): List<ApplicationInfo> {
+        return packages.filter { appInfo ->
+            !appInfo.packageName.startsWith("com.android") &&
+                    !appInfo.packageName.startsWith("com.google") &&
+                    !appInfo.packageName.startsWith("android")
+        }
+    }
+
 }
