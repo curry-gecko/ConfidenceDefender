@@ -12,6 +12,8 @@ class ForDarkTheme {
         val Border = Color.White
         val Background = Color.Black
         val Accent = Color.Cyan
+        val IconButtonFill = Color.White
+        val IconButtonOutline = Color.White
     }
 
 }

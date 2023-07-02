@@ -6,11 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import io.github.currygecko.confidencekeeper.ui.compose.AppInfoListView
+import io.github.currygecko.confidencekeeper.ui.compose.list.AppInfoListView
 import io.github.currygecko.confidencekeeper.ui.theme.ConfidenceKeeperTheme
 import io.github.currygecko.confidencekeeper.usecase.AppInformationUseCase
 
@@ -26,25 +23,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val list = AppInformationUseCase().getApplicationInfo(applicationContext)
                     AppInfoListView(pagingItems = list)
-//                    Greeting("Android")
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ConfidenceKeeperTheme {
-        Greeting("Android")
     }
 }
