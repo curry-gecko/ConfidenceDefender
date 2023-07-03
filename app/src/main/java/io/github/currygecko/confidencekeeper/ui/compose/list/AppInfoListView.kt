@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import io.github.currygecko.confidencekeeper.model.AppInformation
+import io.github.currygecko.confidencekeeper.ui.ShortcutActivity
 import io.github.currygecko.confidencekeeper.ui.compose.list.item.CustomItemView
 
 @Composable
@@ -32,11 +33,11 @@ fun AppInfoListView(pagingItems: List<AppInformation>) {
                     context.startActivity(intent)
                 }
 
-                override fun onMakeShortcutButtonClick(packageName: String) {
-//                    val intent = Intent(context, MakeShortcutActvity::class.java).apply {
-//                        putExtra("packageName", packageName)
-//                    }
-//                    context.startActivity(intent)
+                override fun onMakeShortcutButtonClick(appInformation: AppInformation) {
+                    val intent = Intent(context, ShortcutActivity::class.java).apply {
+                        putExtra(AppInformation.EXTRA_KEY, appInformation)
+                    }
+                    context.startActivity(intent)
                 }
             })
         }

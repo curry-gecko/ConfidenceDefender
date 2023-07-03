@@ -13,7 +13,7 @@ class AppInformationUseCase {
 
     // インストールアプリのリストを取得する
     @SuppressLint("QueryPermissionsNeeded")
-    fun getApplicationInfo(context: Context): List<AppInformation> {
+    fun getApplicationInfoList(context: Context): List<AppInformation> {
         val packageManager = context.packageManager
         val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             PackageManager.MATCH_ALL

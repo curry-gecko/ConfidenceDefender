@@ -40,7 +40,7 @@ fun AppButtons(item: AppInformation, listener: ClickItemViewListener?, modifier:
         }
         Spacer(modifier = Modifier.width(8.dp))
         IconButton(
-            onClick = { listener?.onMakeShortcutButtonClick(item.packageName) },
+            onClick = { listener?.onMakeShortcutButtonClick(item) },
             modifier = Modifier.size(48.dp)
         ) {
             Icon(
