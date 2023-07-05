@@ -1,5 +1,6 @@
 package io.github.currygecko.confidencekeeper.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -7,8 +8,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.SettingsSuggest
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +31,8 @@ import io.github.currygecko.confidencekeeper.ui.compose.list.item.AppInfo
 import io.github.currygecko.confidencekeeper.ui.theme.ConfidenceKeeperTheme
 
 class ShortcutActivity : ComponentActivity() {
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,43 +40,64 @@ class ShortcutActivity : ComponentActivity() {
         val appInformation =
             receivedIntent.getParcelableExtra(AppInformation.EXTRA_KEY) as? AppInformation
 
-
         setContent {
-            // Add state here
-            var sliderValue by remember { mutableStateOf(0f) }
-            var textValue by remember { mutableStateOf("0") }
             ConfidenceKeeperTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Column {
-                        Row(modifier = Modifier.padding(vertical = 8.dp)) {
-                            appInformation?.let {
-                                AppImage(it)
-                                AppInfo(it)
-                            }
-                        }
-                        Row(modifier = Modifier.padding(vertical = 8.dp)) {
-                            EditTextWithSlider(
-                                sliderValue = sliderValue,
-                                onSliderValueChange = { value ->
-                                    sliderValue = value
-                                    textValue = value.toInt().toString()
-                                },
-                                textValue = textValue,
-                                onTextValueChange = { newValue ->
-                                    if (newValue.isEmpty() || newValue.toFloatOrNull() != null) {
-                                        textValue = newValue
-                                        sliderValue = newValue.toFloatOrNull() ?: 0f
-                                    }
-                                }
+                Scaffold(
+                    floatingActionButton = {
+                        FloatingActionButton(onClick = { /* Handle FAB click here */ }) {
+                            Icon(
+                                Icons.Default.SettingsSuggest,
+                                contentDescription = "Create Shortcut",
+                                modifier = Modifier.size(48.dp)
                             )
+                        }
+                    }
+                ) {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        Column {
+                            AppDetail(appInformation)
+                            ShortcutSettings()
                         }
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun AppDetail(appInformation: AppInformation?) {
+
+    Row(modifier = Modifier.padding(vertical = 8.dp)) {
+        appInformation?.let {
+            AppImage(it)
+            AppInfo(it)
+        }
+    }
+}
+
+@Composable
+private fun ShortcutSettings() {
+    //
+    var sliderValue by remember { mutableStateOf(0f) }
+    var textValue by remember { mutableStateOf("0") }
+    Row(modifier = Modifier.padding(vertical = 8.dp)) {
+        EditTextWithSlider(
+            sliderValue = sliderValue,
+            onSliderValueChange = { value ->
+                sliderValue = value
+                textValue = value.toInt().toString()
+            },
+            textValue = textValue,
+            onTextValueChange = { newValue ->
+                if (newValue.isEmpty() || newValue.toFloatOrNull() != null) {
+                    textValue = newValue
+                    sliderValue = newValue.toFloatOrNull() ?: 0f
+                }
+            }
+        )
     }
 }
