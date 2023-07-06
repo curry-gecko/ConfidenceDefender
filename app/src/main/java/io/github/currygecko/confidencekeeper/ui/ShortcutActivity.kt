@@ -2,6 +2,7 @@ package io.github.currygecko.confidencekeeper.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,7 @@ import io.github.currygecko.confidencekeeper.ui.compose.EditTextWithSlider
 import io.github.currygecko.confidencekeeper.ui.compose.list.item.AppImage
 import io.github.currygecko.confidencekeeper.ui.compose.list.item.AppInfo
 import io.github.currygecko.confidencekeeper.ui.theme.ConfidenceKeeperTheme
+import io.github.currygecko.confidencekeeper.usecase.CustomShortcutUseCase
 
 class ShortcutActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -41,10 +43,16 @@ class ShortcutActivity : ComponentActivity() {
             receivedIntent.getParcelableExtra(AppInformation.EXTRA_KEY) as? AppInformation
 
         setContent {
+            val info by remember { mutableStateOf(appInformation!!) }
             ConfidenceKeeperTheme {
                 Scaffold(
                     floatingActionButton = {
-                        FloatingActionButton(onClick = { /* Handle FAB click here */ }) {
+                        FloatingActionButton(onClick = {
+                            Log.e("err", "$info")
+                            info.let {
+                                CustomShortcutUseCase().makeShortcut(it, this)
+                            }
+                        }) {
                             Icon(
                                 Icons.Default.SettingsSuggest,
                                 contentDescription = "Create Shortcut",
@@ -58,7 +66,7 @@ class ShortcutActivity : ComponentActivity() {
                         color = MaterialTheme.colorScheme.background
                     ) {
                         Column {
-                            AppDetail(appInformation)
+                            AppDetail(info)
                             ShortcutSettings()
                         }
                     }
