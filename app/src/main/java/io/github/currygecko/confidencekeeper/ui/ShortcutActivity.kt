@@ -2,7 +2,6 @@ package io.github.currygecko.confidencekeeper.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -26,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.currygecko.confidencekeeper.model.AppInformation
+import io.github.currygecko.confidencekeeper.model.ShortcutSettings
 import io.github.currygecko.confidencekeeper.ui.compose.EditTextWithSlider
 import io.github.currygecko.confidencekeeper.ui.compose.list.item.AppImage
 import io.github.currygecko.confidencekeeper.ui.compose.list.item.AppInfo
@@ -48,8 +48,11 @@ class ShortcutActivity : ComponentActivity() {
                 Scaffold(
                     floatingActionButton = {
                         FloatingActionButton(onClick = {
-                            Log.e("err", "$info")
-                            MakeShortcutUseCase()(info, this)
+                            MakeShortcutUseCase()(
+                                info,
+                                ShortcutSettings(0),
+                                this
+                            )
                         }) {
                             Icon(
                                 Icons.Default.SettingsSuggest,
@@ -65,7 +68,7 @@ class ShortcutActivity : ComponentActivity() {
                     ) {
                         Column {
                             AppDetail(info)
-                            ShortcutSettings()
+                            Settings()
                         }
                     }
                 }
@@ -86,7 +89,7 @@ private fun AppDetail(appInformation: AppInformation?) {
 }
 
 @Composable
-private fun ShortcutSettings() {
+private fun Settings() {
     //
     var sliderValue by remember { mutableStateOf(0f) }
     var textValue by remember { mutableStateOf("0") }
