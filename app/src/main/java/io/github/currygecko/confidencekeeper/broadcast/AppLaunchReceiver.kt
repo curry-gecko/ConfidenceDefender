@@ -16,7 +16,7 @@ class AppLaunchReceiver : BroadcastReceiver() {
 
             if (packageName == targetPackage) {
                 // 音量調整APIを起動する処理を記述
-                AdjustVolumeUseCase().setMute(context)
+                AdjustVolumeUseCase().invoke(context)
             }
         }
     }

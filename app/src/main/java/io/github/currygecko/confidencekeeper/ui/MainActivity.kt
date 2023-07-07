@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import io.github.currygecko.confidencekeeper.ui.compose.list.AppInfoListView
 import io.github.currygecko.confidencekeeper.ui.theme.ConfidenceKeeperTheme
-import io.github.currygecko.confidencekeeper.usecase.AppInformationUseCase
+import io.github.currygecko.confidencekeeper.usecase.GetAppInformationListUseCase
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +21,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val list = AppInformationUseCase().getApplicationInfoList(applicationContext)
+                    val list =
+                        GetAppInformationListUseCase()(applicationContext) // TODO 呼び出し元の変更
                     AppInfoListView(pagingItems = list)
                 }
             }

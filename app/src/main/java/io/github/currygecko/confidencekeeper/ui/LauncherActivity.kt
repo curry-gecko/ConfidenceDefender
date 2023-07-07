@@ -17,7 +17,7 @@ class LauncherActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AdjustVolumeUseCase().setMute(this)
+            AdjustVolumeUseCase()(this)
             var showDialog by remember { mutableStateOf(true) }
 
             if (showDialog) {

@@ -6,7 +6,7 @@ import android.os.Build
 
 class AdjustVolumeUseCase() {
 
-    fun setMute(context: Context) {
+    operator fun invoke(context: Context) {
         val manager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
