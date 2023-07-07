@@ -40,13 +40,10 @@ class MakeShortcutUseCase {
     ): ShortcutInfoCompat {
         val intent = Intent(context, LauncherActivity::class.java)
         intent.action = Intent.ACTION_VIEW
-        intent.putExtra(
-            "packageName",
-            appInfo.packageName
-        )
-        settings?.let {
-            intent.putParcelableArrayListExtra("settings", arrayListOf(it))
-        }
+        intent.putExtra(AppInformation.EXTRA_KEY, appInfo.packageName)
+//        settings?.let {
+//            intent.putParcelableArrayListExtra("settings", arrayListOf(it))
+//        }
         val key = "${context.packageName}_${appInfo.packageName}" //
         return ShortcutInfoCompat.Builder(context, key)
             .setShortLabel(appInfo.packageLabel)
