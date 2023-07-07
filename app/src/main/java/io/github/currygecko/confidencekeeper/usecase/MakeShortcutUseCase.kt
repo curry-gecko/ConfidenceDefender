@@ -9,9 +9,10 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import io.github.currygecko.confidencekeeper.model.AppInformation
 import io.github.currygecko.confidencekeeper.ui.LauncherActivity
 
-class CustomShortcutUseCase {
+class MakeShortcutUseCase {
 
-    fun makeShortcut(appInfo: AppInformation, context: Context) {
+
+    operator fun invoke(appInfo: AppInformation, context: Context) {
         val shortcutManager = context.getSystemService(ShortcutManager::class.java)
 
         val intent = Intent(context, LauncherActivity::class.java)

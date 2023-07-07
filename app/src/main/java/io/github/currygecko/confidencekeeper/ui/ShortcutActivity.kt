@@ -30,7 +30,7 @@ import io.github.currygecko.confidencekeeper.ui.compose.EditTextWithSlider
 import io.github.currygecko.confidencekeeper.ui.compose.list.item.AppImage
 import io.github.currygecko.confidencekeeper.ui.compose.list.item.AppInfo
 import io.github.currygecko.confidencekeeper.ui.theme.ConfidenceKeeperTheme
-import io.github.currygecko.confidencekeeper.usecase.CustomShortcutUseCase
+import io.github.currygecko.confidencekeeper.usecase.MakeShortcutUseCase
 
 class ShortcutActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -49,9 +49,7 @@ class ShortcutActivity : ComponentActivity() {
                     floatingActionButton = {
                         FloatingActionButton(onClick = {
                             Log.e("err", "$info")
-                            info.let {
-                                CustomShortcutUseCase().makeShortcut(it, this)
-                            }
+                            MakeShortcutUseCase()(info, this)
                         }) {
                             Icon(
                                 Icons.Default.SettingsSuggest,

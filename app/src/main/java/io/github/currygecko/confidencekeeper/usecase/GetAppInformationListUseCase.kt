@@ -9,11 +9,11 @@ import io.github.currygecko.confidencekeeper.model.AppInformation
 import io.github.currygecko.confidencekeeper.model.asAppInfo
 
 
-class AppInformationUseCase {
+class GetAppInformationListUseCase {
 
     // インストールアプリのリストを取得する
     @SuppressLint("QueryPermissionsNeeded")
-    fun getApplicationInfoList(context: Context): List<AppInformation> {
+    operator fun invoke(context: Context): List<AppInformation> {
         val packageManager = context.packageManager
         val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             PackageManager.MATCH_ALL
