@@ -32,6 +32,7 @@
         <activity
             android:name=".ui.LauncherActivity"
             android:exported="false"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.ConfidenceKeeper">
 
             <intent-filter>

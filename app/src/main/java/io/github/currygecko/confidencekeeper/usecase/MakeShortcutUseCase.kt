@@ -41,6 +41,7 @@ class MakeShortcutUseCase {
         val intent = Intent(context, LauncherActivity::class.java)
         intent.action = Intent.ACTION_VIEW
         intent.putExtra(AppInformation.EXTRA_KEY, appInfo.packageName)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 //        settings?.let {
 //            intent.putParcelableArrayListExtra("settings", arrayListOf(it))
 //        }
