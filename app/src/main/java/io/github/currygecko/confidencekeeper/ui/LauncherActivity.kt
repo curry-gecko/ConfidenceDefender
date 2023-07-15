@@ -4,11 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import io.github.currygecko.confidencekeeper.model.AppInformation
+import io.github.currygecko.confidencekeeper.usecase.CallAudioShowInterfaceUseCase
 
 class LauncherActivity : ComponentActivity() {
 
@@ -19,9 +23,27 @@ class LauncherActivity : ComponentActivity() {
             var showDialog by remember { mutableStateOf(true) }
 
             if (showDialog) {
-                showDialog = false;
-                launchIntent()
+                CallAudioShowInterfaceUseCase().invoke(applicationContext)
+                AlertDialog(
+                    onDismissRequest = { showDialog = false },
+                    title = { Text("Launch") },
+                    text = { Text("This is a notification.") },
+                    confirmButton = {
+                        TextButton(onClick = {
+                            launchIntent()
+                            showDialog = false
+                        }) {
+                            Text("Launch")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { finish() }) {
+                            Text("Dismiss")
+                        }
+                    }
+                )
             }
+
         }
     }
 
