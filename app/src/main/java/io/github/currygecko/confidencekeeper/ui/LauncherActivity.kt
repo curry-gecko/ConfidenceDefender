@@ -27,7 +27,7 @@ class LauncherActivity : ComponentActivity() {
                 AlertDialog(
                     onDismissRequest = { showDialog = false },
                     title = { Text("Launch") },
-                    text = { Text("This is a notification.") },
+                    text = { Text("I will change the settings and launch the app.") },
                     confirmButton = {
                         TextButton(onClick = {
                             launchIntent()
