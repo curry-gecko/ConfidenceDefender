@@ -10,5 +10,6 @@ data class ShortcutSettings(
     companion object {
         private const val prefix = "FOR_SHORTCUT_KEY"
         const val EXTRA_KEY_VOLUME = "{$prefix}_VOLUME"
+
     }
 }
