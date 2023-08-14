@@ -1,6 +1,7 @@
 package io.github.currygecko.confidencekeeper.ui
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import io.github.currygecko.confidencekeeper.model.AppInformation
+import io.github.currygecko.confidencekeeper.ui.compose.dialog.RowAdjustBrightness
 import io.github.currygecko.confidencekeeper.ui.compose.dialog.RowAdjustVolume
 import io.github.currygecko.confidencekeeper.usecase.CallAudioShowInterfaceUseCase
 
@@ -58,6 +60,17 @@ class LauncherActivity : ComponentActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (!android.provider.Settings.System.canWrite(this)) {
+            // ユーザーにパーミッションをリクエストする
+            val intent = Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS)
+            intent.data = Uri.parse("package:" + this.packageName)
+            this.startActivity(intent)
+        }
+    }
+
+
     private fun launchIntent() {
         val intent = intent
         val extras = intent.extras ?: return
@@ -77,6 +90,7 @@ private fun AlertDialogContent() {
     Column {
         Text("I will change the settings and launch the app.")
         RowAdjustVolume()
+        RowAdjustBrightness()
     }
 }
 
