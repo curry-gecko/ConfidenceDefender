@@ -1,7 +1,6 @@
 package io.github.currygecko.confidencekeeper.ui
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -59,17 +58,6 @@ class LauncherActivity : ComponentActivity() {
 
         }
     }
-
-    override fun onResume() {
-        super.onResume()
-        if (!android.provider.Settings.System.canWrite(this)) {
-            // ユーザーにパーミッションをリクエストする
-            val intent = Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS)
-            intent.data = Uri.parse("package:" + this.packageName)
-            this.startActivity(intent)
-        }
-    }
-
 
     private fun launchIntent() {
         val intent = intent
