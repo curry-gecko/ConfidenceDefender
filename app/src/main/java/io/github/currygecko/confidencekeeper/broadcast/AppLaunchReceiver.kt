@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import io.github.currygecko.confidencekeeper.usecase.AdjustVolumeUseCase
 
 class AppLaunchReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -16,7 +15,7 @@ class AppLaunchReceiver : BroadcastReceiver() {
 
             if (packageName == targetPackage) {
                 // 音量調整APIを起動する処理を記述
-                AdjustVolumeUseCase().invoke(context)
+//                AdjustVolumeUseCase().invoke(context)
             }
         }
     }
