@@ -5,18 +5,25 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Parcelable
+import android.util.Log
 import androidx.core.graphics.drawable.IconCompat
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class AppInformation(
-    val packageName: String,
-    val packageLabel: String
+    val packageName: String = "undefined package name",
+    val packageLabel: String = "undefined package label"
 ) : Parcelable {
     fun getAppIcon(packageManager: PackageManager): Drawable {
-        return packageManager.getApplicationIcon(this.packageName)
+        return try {
+            packageManager.getApplicationIcon(this.packageName)
+        } catch (e: Exception) {
+            Log.e("AppIconError", "$this", e)
+            ColorDrawable(android.graphics.Color.TRANSPARENT)
+        }
     }
 
     fun makeIcon(context: Context): IconCompat {
@@ -44,3 +51,5 @@ fun ApplicationInfo.asAppInfo(manager: PackageManager): AppInformation {
         packageLabel = this.loadLabel(manager).toString()
     )
 }
+
+fun ApplicationInfo.getDummy(): ApplicationInfo = ApplicationInfo()

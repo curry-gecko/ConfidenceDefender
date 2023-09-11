@@ -4,20 +4,29 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import android.widget.Toast
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import io.github.currygecko.confidencekeeper.model.AppInformation
 import io.github.currygecko.confidencekeeper.ui.ShortcutActivity
-import io.github.currygecko.confidencekeeper.ui.compose.list.item.CustomItemView
+import io.github.currygecko.confidencekeeper.ui.compose.list.item.SimpleAppInfoItemView
 
 @Composable
-fun AppInfoListView(pagingItems: List<AppInformation>) {
+fun AppInfoListView(pagingItems: List<AppInformation>, columns: Int = 4) {
     val context = LocalContext.current
-    LazyColumn {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(columns),
+        contentPadding = PaddingValues(4.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
         items(pagingItems.count()) { index ->
             val item = pagingItems[index]
-            CustomItemView(item = item, listener = object : ClickItemViewListener {
+//            CustomItemView(item = item, listener = object : ClickItemViewListener {
+            SimpleAppInfoItemView(item = item, listener = object : ClickItemViewListener {
                 override fun onClick() {
                     // TODO
                 }
