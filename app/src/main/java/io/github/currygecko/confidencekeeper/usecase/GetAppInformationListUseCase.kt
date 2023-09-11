@@ -23,7 +23,7 @@ class GetAppInformationListUseCase {
 
         val packages = packageManager.getInstalledApplications(flags)
 
-        return filterAppInfo(packages).map { appInfo ->
+        return filterAppInfo(packageManager, packages).map { appInfo ->
             appInfo.asAppInfo(packageManager)
         }.sortedBy {
             it.packageLabel
@@ -31,11 +31,13 @@ class GetAppInformationListUseCase {
 
     }
 
-    private fun filterAppInfo(packages: List<ApplicationInfo>): List<ApplicationInfo> {
+    private fun filterAppInfo(
+        pm: PackageManager,
+        packages: List<ApplicationInfo>
+    ): List<ApplicationInfo> {
         return packages.filter { appInfo ->
-            !appInfo.packageName.startsWith("com.android") &&
-                    !appInfo.packageName.startsWith("com.google") &&
-                    !appInfo.packageName.startsWith("android")
+            val launchIntent = pm.getLaunchIntentForPackage(appInfo.packageName)
+            launchIntent != null
         }
     }
 
