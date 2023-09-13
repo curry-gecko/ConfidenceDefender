@@ -1,5 +1,6 @@
 package io.github.currygecko.confidencekeeper.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -65,8 +66,10 @@ class LauncherActivity : ComponentActivity() {
         val packageName = extras.getString(AppInformation.EXTRA_KEY) ?: return
 
         val launchIntent = packageManager.getLaunchIntentForPackage(packageName) ?: return
-//        launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        startActivity(launchIntent)
+        launchIntent.flags =
+            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
+        launchIntent.addCategory(Intent.CATEGORY_LAUNCHER)
+        startActivityIfNeeded(launchIntent, 0)
         finish()
     }
 }
