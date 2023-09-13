@@ -1,6 +1,5 @@
 package io.github.currygecko.confidencekeeper.ui.compose.list.item
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,9 +26,11 @@ fun SimpleAppInfoItemView(item: AppInformation, listener: ClickItemViewListener?
 //                width = 2.dp,
 //                color = colorBorder
 //            )
-            .clickable { listener?.onClick() }
             .pointerInput(Unit) {
                 detectTapGestures(
+                    onTap = {
+                        listener?.onClick()
+                    },
                     onLongPress = {
                         listener?.onLongClick()
                     }

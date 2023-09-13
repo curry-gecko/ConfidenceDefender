@@ -12,8 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import io.github.currygecko.confidencekeeper.model.AppInformation
+import io.github.currygecko.confidencekeeper.model.ShortcutSettings
 import io.github.currygecko.confidencekeeper.ui.ShortcutActivity
 import io.github.currygecko.confidencekeeper.ui.compose.list.item.SimpleAppInfoItemView
+import io.github.currygecko.confidencekeeper.usecase.MakeShortcutUseCase
 
 @Composable
 fun AppInfoListView(pagingItems: List<AppInformation>, columns: Int = 4) {
@@ -28,7 +30,11 @@ fun AppInfoListView(pagingItems: List<AppInformation>, columns: Int = 4) {
 //            CustomItemView(item = item, listener = object : ClickItemViewListener {
             SimpleAppInfoItemView(item = item, listener = object : ClickItemViewListener {
                 override fun onClick() {
-                    // TODO
+                    MakeShortcutUseCase()(
+                        item,
+                        ShortcutSettings(0),
+                        context
+                    )
                 }
 
                 override fun onLongClick() {
