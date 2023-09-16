@@ -42,7 +42,7 @@ class MakeShortcutUseCase {
         intent.action = Intent.ACTION_VIEW
         intent.putExtra(AppInformation.EXTRA_KEY, appInfo.packageName)
         intent.flags =
-            Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS or Intent.FLAG_ACTIVITY_NEW_TASK
 //        settings?.let {
 //            intent.putParcelableArrayListExtra("settings", arrayListOf(it))
 //        }
